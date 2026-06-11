@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zenith Task | Premium To-Do List</title>
+    <!-- Google Fonts for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script type="module" crossorigin src="./assets/index-9j2bgYS3.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BugvmRO8.css">
+  </head>
+  <body>
+    <!-- Main Glassmorphic Container -->
+    <div id="app" class="app-container">
+      
+      <!-- Top Navigation Header -->
+      <header class="app-header">
+        <div class="logo-area">
+          <div class="logo-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+            </svg>
+          </div>
+          <h1>Zenith<span>Task</span></h1>
+        </div>
+
+        <!-- Mini Stats Board -->
+        <div class="stats-dashboard">
+          <div class="circular-progress-container">
+            <svg class="progress-ring" width="54" height="54">
+              <circle class="progress-ring-bg" stroke="rgba(255,255,255,0.06)" stroke-width="4" fill="transparent" r="22" cx="27" cy="27"/>
+              <circle class="progress-ring-bar" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" fill="transparent" r="22" cx="27" cy="27"/>
+            </svg>
+            <span class="progress-percent" id="completionRatio">0%</span>
+          </div>
+          <div class="stats-text">
+            <div id="statsCount">0 / 0 Tasks</div>
+            <div class="sub-label">Completed</div>
+          </div>
+        </div>
+
+        <!-- Action Controls -->
+        <div class="header-actions">
+          <button id="btnSettings" class="btn btn-secondary btn-icon-only" aria-label="Settings">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+          </button>
+          <button id="btnAddTask" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>Create Task</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Layout Grid -->
+      <main class="app-layout">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="app-sidebar">
+          
+          <!-- Search Block -->
+          <div class="search-box">
+            <svg viewBox="0 0 24 24" width="18" height="18" class="search-icon" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="taskSearch" placeholder="Search tasks..." autocomplete="off">
+          </div>
+
+          <!-- Sidebar Filters -->
+          <nav class="filter-nav">
+            <div class="nav-section-title">Status Filter</div>
+            <button class="nav-item active" data-filter="all">
+              <span class="nav-indicator-dot all-dot"></span>
+              All Tasks
+              <span class="badge" id="badgeAll">0</span>
+            </button>
+            <button class="nav-item" data-filter="active">
+              <span class="nav-indicator-dot active-dot"></span>
+              Active
+              <span class="badge" id="badgeActive">0</span>
+            </button>
+            <button class="nav-item" data-filter="completed">
+              <span class="nav-indicator-dot completed-dot"></span>
+              Completed
+              <span class="badge" id="badgeCompleted">0</span>
+            </button>
+
+            <div class="nav-section-title">Priority Filter</div>
+            <button class="nav-item" data-filter="high">
+              <span class="nav-indicator-dot high-dot"></span>
+              High Priority
+              <span class="badge badge-high" id="badgeHigh">0</span>
+            </button>
+            <button class="nav-item" data-filter="medium">
+              <span class="nav-indicator-dot medium-dot"></span>
+              Medium Priority
+              <span class="badge badge-medium" id="badgeMedium">0</span>
+            </button>
+            <button class="nav-item" data-filter="low">
+              <span class="nav-indicator-dot low-dot"></span>
+              Low Priority
+              <span class="badge badge-low" id="badgeLow">0</span>
+            </button>
+          </nav>
+
+          <!-- Sorting Selector -->
+          <div class="sort-section">
+            <label for="taskSort">Sort By</label>
+            <div class="select-wrapper">
+              <select id="taskSort">
+                <option value="dueDate">Due Date</option>
+                <option value="priority">Priority</option>
+                <option value="createdAt">Date Created</option>
+                <option value="completed">Completion</option>
+              </select>
+              <svg class="select-arrow" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Main Task List Workspace -->
+        <section class="task-workspace">
+          
+          <!-- Missed Alarms Alert Banner -->
+          <div id="missedAlarmsContainer" class="missed-alarms-banner hidden">
+            <div class="banner-header">
+              <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" class="alert-icon">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              <h4>Missed Alarms While Away</h4>
+              <button id="btnDismissAllMissed" class="btn-text">Clear All</button>
+            </div>
+            <ul id="missedAlarmsList" class="missed-alarms-list"></ul>
+          </div>
+
+          <!-- Active Alarms Banner (if playing) -->
+          <div id="activeAlarmBanner" class="active-alarm-banner hidden">
+            <div class="alarm-banner-content">
+              <div class="alarm-pulsing-icon">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="bell-pulse">
+                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+              </div>
+              <div class="alarm-info">
+                <div class="alarm-title">Alarm Active!</div>
+                <div class="alarm-task-name" id="activeAlarmTaskTitle">Task Title Here</div>
+              </div>
+            </div>
+            <div class="alarm-actions">
+              <button id="btnAlarmSnooze" class="btn btn-secondary btn-small">Snooze (5m)</button>
+              <button id="btnAlarmDismiss" class="btn btn-primary btn-small">Dismiss</button>
+            </div>
+          </div>
+
+          <!-- Empty State -->
+          <div id="emptyState" class="empty-state">
+            <div class="empty-icon">
+              <svg viewBox="0 0 24 24" width="64" height="64" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+            </div>
+            <h3>Organize Your Day</h3>
+            <p>No tasks fit your criteria. Create a new task to get started!</p>
+            <button id="btnEmptyStateCreate" class="btn btn-primary">Create First Task</button>
+          </div>
+
+          <!-- Task Card Grid / List -->
+          <div id="taskList" class="task-grid"></div>
+        </section>
+      </main>
+
+      <!-- App Footer -->
+      <footer class="app-footer">
+        <p>&copy; 2026 ZenithTask. Powered by TypeScript & Web Audio.</p>
+      </footer>
+    </div>
+
+    <!-- AUDIO INTERACTION TRIGGER PANEL (If blocked) -->
+    <div id="audioUnlockPanel" class="audio-unlock-overlay hidden">
+      <div class="unlock-card glass">
+        <div class="unlock-icon">
+          <svg viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+        </div>
+        <h3>Enable Audio Alerts</h3>
+        <p>Browsers restrict automatic sounds. Click below to enable loud alarms and task chime settings.</p>
+        <button id="btnUnlockAudio" class="btn btn-primary">Enable Sound Alert</button>
+      </div>
+    </div>
+
+    <!-- ADD/EDIT TASK MODAL -->
+    <div id="modalTask" class="modal-overlay hidden">
+      <div class="modal-card glass">
+        <div class="modal-header">
+          <h3 id="modalTitle">Create New Task</h3>
+          <button class="modal-close" id="btnCloseTaskModal">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <form id="taskForm" class="modal-body">
+          <input type="hidden" id="editTaskId">
+          
+          <div class="form-group">
+            <label for="taskTitleInput">Task Name *</label>
+            <input type="text" id="taskTitleInput" placeholder="What needs to be done?" required autocomplete="off">
+          </div>
+          
+          <div class="form-group">
+            <label for="taskDescInput">Details / Description</label>
+            <textarea id="taskDescInput" rows="3" placeholder="Add additional details or context..."></textarea>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group half">
+              <label for="taskPriorityInput">Priority</label>
+              <div class="select-wrapper">
+                <select id="taskPriorityInput">
+                  <option value="low">Low Priority</option>
+                  <option value="medium" selected>Medium Priority</option>
+                  <option value="high">High Priority</option>
+                </select>
+                <svg class="select-arrow" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+            </div>
+            <div class="form-group half">
+              <label for="taskCategoryInput">Category</label>
+              <div class="select-wrapper">
+                <select id="taskCategoryInput">
+                  <option value="personal">Personal</option>
+                  <option value="work">Work</option>
+                  <option value="studies">Studies</option>
+                  <option value="other" selected>Other</option>
+                </select>
+                <svg class="select-arrow" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="taskDueInput">Due Date & Time</label>
+            <input type="datetime-local" id="taskDueInput">
+          </div>
+
+          <!-- Alarm Configuration Toggle -->
+          <div class="form-group toggle-group glass-panel">
+            <div class="toggle-text">
+              <div class="toggle-title">Enable Sound Alarm</div>
+              <div class="toggle-desc">Trigger a loud audible alarm when this task is due</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="taskAlarmInput" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="btnCancelTaskModal">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="btnSubmitTask">Save Task</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- SETTINGS MODAL -->
+    <div id="modalSettings" class="modal-overlay hidden">
+      <div class="modal-card glass">
+        <div class="modal-header">
+          <h3>Application Settings</h3>
+          <button class="modal-close" id="btnCloseSettingsModal">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Theme Setting -->
+          <div class="form-group">
+            <label>Interface Theme</label>
+            <div class="theme-buttons">
+              <button class="theme-btn" data-theme="light">
+                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="5"></circle>
+                  <line x1="12" y1="1" x2="12" y2="3"></line>
+                  <line x1="12" y1="21" x2="12" y2="23"></line>
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                  <line x1="1" y1="12" x2="3" y2="12"></line>
+                  <line x1="21" y1="12" x2="23" y2="12"></line>
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <span>Light</span>
+              </button>
+              <button class="theme-btn active" data-theme="dark">
+                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+                <span>Dark</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Sound Alarm Volume Settings (with loud option) -->
+          <div class="form-group">
+            <div class="label-row">
+              <label for="settingsVolume">Alarm Volume Level</label>
+              <span id="volumeValue" class="value-highlight">80%</span>
+            </div>
+            <div class="volume-slider-container">
+              <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="volume-icon">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14" class="vol-wave-loud"></path>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07" class="vol-wave-soft"></path>
+              </svg>
+              <input type="range" id="settingsVolume" min="0" max="1" step="0.05" value="0.8" class="volume-slider">
+            </div>
+            <div class="volume-labels">
+              <span>Mute</span>
+              <span>Soft</span>
+              <span>Medium</span>
+              <span class="loud-tag">Loud Volume</span>
+            </div>
+          </div>
+
+          <!-- Sound Alarm Tone Selector -->
+          <div class="form-group">
+            <label for="settingsSoundPattern">Alarm Sound Tone</label>
+            <div class="select-wrapper">
+              <select id="settingsSoundPattern">
+                <option value="digital">Retro Digital Beep (Loud)</option>
+                <option value="chime">Harmonic Arpeggio Chime</option>
+                <option value="pulse">Deep Warning Pulse</option>
+              </select>
+              <svg class="select-arrow" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Test Sound Action -->
+          <button id="btnTestVolume" class="btn btn-secondary btn-full">
+            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <span>Play Test Alarm Tone</span>
+          </button>
+        </div>
+        <div class="modal-footer border-top">
+          <button type="button" class="btn btn-primary" id="btnSaveSettings">Close & Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN ORCHESTRATION INJECT -->
+  </body>
+</html>
