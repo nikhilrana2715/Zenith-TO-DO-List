@@ -111,3 +111,14 @@ Designed to operate with a high level of autonomy, Antigravity excels at:
 - Writing responsive CSS layouts, modern animations, and semantic page structures.
 - Integrating database stores and persistence layers.
 - Diagnosing and patching complex multi-platform errors (such as Java version compatibility issues during Gradle compilation).
+
+---
+
+## 👨‍💻 Creator & Author
+- **Nikhil Rana** ([@nikhilrana2715](https://github.com/nikhilrana2715))
+
+---
+
+## 📄 License & Copyright
+© 2026 Nikhil Rana. All rights reserved. 
+Licensed under the [MIT License](https://opensource.org/licenses/MIT).
